@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+
+    .fondo-inicio {
+        background-image: url("https://i.postimg.cc/pTkt3g4r/05-tri-fold-brochure-template.png");
+        background-size: cover;
+        background-position: right;
+    }
+
+    .fondo-juntos {
+        background-image: url("https://i.postimg.cc/VLWqrwp5/tri.png");
+        background-size: contain;
+        background-position: center;
+    }
+
+    .open {
+        width: 100%;
+    }
+
+    .close {
+        width: 0;
+        height: 0;
+    }
+}

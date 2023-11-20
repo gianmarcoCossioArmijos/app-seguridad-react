@@ -16,6 +16,7 @@ import { MdOutlineLocalPolice } from "react-icons/md";
 import Mapa from '../componentes/administracion-componentes/Mapa'
 import axios from 'axios';
 import { toast } from 'sonner';
+import moment from 'moment';
 
 const MenuAdministracion = () => {
   const [ alertas, setAlertas] = useState([]);
@@ -26,7 +27,8 @@ const MenuAdministracion = () => {
     listarAlertas()
       .then( data => setAlertas(data));
 
-    const fecha = new Date().toISOString().slice(0, 10);
+    const date = new Date();
+    const fecha = moment(date).format('YYYY-MM-DD');
     listarDenuncias(fecha)
       .then(data  => setDenuncias(data))
   }, [])
@@ -126,24 +128,35 @@ const MenuAdministracion = () => {
     <main className='w-full min-h-screen p-4 flex flex-col gap-4 text-cyan-950'>
 
       <section className='w-full p-3 flex justify-center gap-1 items-center bg-white/60 rounded-lg'>
-
+      
         <Link to="/usuarios-administracion">
           <FaUsersCog className='w-[50px] h-[50px] p-2 bg-yellow-400 hover:bg-yellow-500 rounded-lg'/>
         </Link>
+
         <LuNetwork className='w-[50px] h-[50px] p-2 bg-yellow-400 hover:bg-yellow-500 rounded-lg'/>
         <MdCrisisAlert className='w-[50px] h-[50px] p-2 bg-yellow-400 hover:bg-yellow-500 rounded-lg'/>
         <TbReportSearch className='w-[50px] h-[50px] p-2 bg-yellow-400 hover:bg-yellow-500 rounded-lg'/>
-        <FaCarSide className='w-[50px] h-[50px] p-2 bg-yellow-400 hover:bg-yellow-500 rounded-lg'/>
+
+        <Link to="/vehiculos-administracion">
+          <FaCarSide className='w-[50px] h-[50px] p-2 bg-yellow-400 hover:bg-yellow-500 rounded-lg'/>
+        </Link>
+
         <GiTeamDowngrade className='w-[50px] h-[50px] p-2 bg-yellow-400 hover:bg-yellow-500 rounded-lg'/>
-        <TbMapCog className='w-[50px] h-[50px] p-2 bg-yellow-400 hover:bg-yellow-500 rounded-lg'/>
-        <RiNewspaperLine className='w-[50px] h-[50px] p-2 bg-yellow-400 hover:bg-yellow-500 rounded-lg'/>
+
+        <Link to="/zonas-administracion">
+          <TbMapCog className='w-[50px] h-[50px] p-2 bg-yellow-400 hover:bg-yellow-500 rounded-lg'/>
+        </Link>
+
+        <Link to="/noticias-administracion">
+          <RiNewspaperLine className='w-[50px] h-[50px] p-2 bg-yellow-400 hover:bg-yellow-500 rounded-lg'/>
+        </Link>
         
       </section>
 
       <Mapa alertas={alertas}/>
 
       <h4 className='flex items-center gap-4 p-2 text-lg font-bold bg-white rounded-lg'>
-        Lista de Alertas de Emergencia
+        Alertas de Emergencia Pendientes
         <RiAlarmWarningFill />
       </h4>
 
@@ -185,7 +198,7 @@ const MenuAdministracion = () => {
       </table>
 
       <h4 className='flex items-center gap-4 p-2 text-lg font-bold bg-white rounded-lg'>
-        Lista de Denuncias
+        Denuncias de Hoy
         <MdOutlineLocalPolice />
       </h4>
 

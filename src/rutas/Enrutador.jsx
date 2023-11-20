@@ -13,6 +13,9 @@ import RecuperarClave from '../paginas/RecuperarClave.jsx'
 import Denuncia from '../paginas/Denuncia.jsx'
 import MenuAdministracion from '../paginas/MenuAdministracion.jsx'
 import UsuariosAdministracion from '../paginas/UsuariosAdministracion.jsx'
+import NoticiasAdministracion from '../paginas/NoticiasAdministracion.jsx'
+import ZonasAdministracion from '../paginas/ZonasAdministracion.jsx'
+import VehiculosAdministracion from '../paginas/VehiculosAdministracion.jsx'
 
 const Enrutador = () => {
   return (
@@ -31,6 +34,9 @@ const Enrutador = () => {
                   <Route path='/denunciar' element={ <Denuncia /> }/>
                   <Route path='/administracion' element={ <MenuAdministracion /> }/>
                   <Route path='/usuarios-administracion' element={ <UsuariosAdministracion /> }/>
+                  <Route path='/noticias-administracion' element={ <NoticiasAdministracion /> }/>
+                  <Route path='/zonas-administracion' element={ <ZonasAdministracion /> }/>
+                  <Route path='/vehiculos-administracion' element={ <VehiculosAdministracion /> }/>
 
               </Routes>
           </Base>

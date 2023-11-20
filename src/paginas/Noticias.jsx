@@ -6,16 +6,42 @@ import { FaTools } from "react-icons/fa";
 import { MdOutlineLocalPolice } from "react-icons/md";
 import { RiAlarmWarningFill } from "react-icons/ri";
 
-import {NOTICIAS_FAKE_BD} from '../constantes/noticias.js'
+import axios from 'axios'
 import { toast } from 'sonner';
 import enviarAlerta from '../utils/alerta.js'
+import { useEffect } from 'react';
 
 const Noticias = () => {
-    const [noticias, setNoticias] = useState(NOTICIAS_FAKE_BD);
+    const [noticias, setNoticias] = useState([]);
     const [ubicacion, setUbicacion] = useState({
         latitud: "",
         longitud: ""
     })
+
+    useEffect(() => {
+
+        listarNoticias().
+            then(data => setNoticias(data))
+    }, [])
+
+    const listarNoticias = async() => {
+
+        const url = "https://alerta-jaen-backend.onrender.com/noticias";
+        let respuesta;
+        try {
+    
+            const data = JSON.parse(localStorage.getItem("token"));
+            const token = `Bearer ${data.access_token}`;
+            respuesta = await axios.get(url, {
+                headers: {
+                  Authorization: token
+                }
+            })
+        } catch (error) {
+            console.error("Error en la solicitud:", error.message);
+        }
+        return respuesta.data;
+    }
 
     const handleClick = async() => {
 

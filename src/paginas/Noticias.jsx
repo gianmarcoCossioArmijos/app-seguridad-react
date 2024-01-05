@@ -13,21 +13,21 @@ const Noticias = () => {
     useEffect(() => {
 
         listarNoticias().
-            then(data => setNoticias(data))
+            then(data => setNoticias(filtrarNoticias(data)))
     }, [])
 
-    /* const filtrarNoticias = (noticias) => {
+    const filtrarNoticias = (noticias) => {
 
-        const noticiasLongitud = 6;
+        const noticiasLongitud = 8;
         let nuevaListaNoticias = [];
 
-        for (let i = noticiasLongitud; i > 0; i--) {
+        for (let i = noticiasLongitud; i >= 0; i--) {
 
             nuevaListaNoticias.push(noticias[i]);
         }
 
         return nuevaListaNoticias;
-    } */
+    }
 
     const listarNoticias = async() => {
 

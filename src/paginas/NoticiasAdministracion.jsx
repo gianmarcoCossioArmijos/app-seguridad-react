@@ -207,7 +207,7 @@ const NoticiasAdministracion = () => {
                     <th className='border border-cyan-950'>{noticia.titulo}</th>
                     <th className='border border-cyan-950'>{noticia.descripcion}</th>
                     <th className='border border-cyan-950'>{noticia.sector}</th>
-                    <th className='border border-cyan-950'>{noticia.imagen}</th>
+                    <th className='border border-cyan-950 text-[8px]'>{noticia.imagen}</th>
                     <th className='flex p-1 justify-center gap-1'>
                         <BiEdit
                             onClick={() => setFormulario({

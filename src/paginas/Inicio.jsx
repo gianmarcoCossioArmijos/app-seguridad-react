@@ -11,7 +11,7 @@ const Inicio = () => {
 
           <div className='w-full py-12 flex flex-col gap-10'>
             <h3 className='w-3/4 mx-auto text-4xl text-center font-bold'>
-              Si ves un <span className='px-1 bg-yellow-500'>delito</span> o <span className='px-1 bg-yellow-500'>infraccion</span> reportalo y ayuda a mejorar la <span className='px-1 bg-yellow-500'>seguridad</span> en nuestra ciudad
+              Si ves un <span className='px-1 bg-yellow-500'>delito</span> o <span className='px-1 bg-yellow-500'>infracción,</span> repórtalo y ayuda a mejorar la <span className='px-1 bg-yellow-500'>seguridad</span> en nuestra ciudad
             </h3>
 
             <Link
@@ -31,7 +31,7 @@ const Inicio = () => {
               className='w-3/4 mx-auto rounded-lg'/>
 
           <h3 className='w-3/4 mx-auto text-4xl text-center font-bold'>
-            Si tu o alguien, se encuentran en una <span className='px-1 bg-yellow-500'>situacion de peligro</span>, envianos una <span className='px-1 bg-yellow-500'>alerta de emergencia</span> desde nuestra app movil
+            Si tú o alguien, se encuentran en una <span className='px-1 bg-yellow-500'>situación de peligro</span>, envíanos una <span className='px-1 bg-yellow-500'>alerta de emergencia</span> desde nuestra aplicación móvil
           </h3>
 
           <div className='w-full flex flex-col gap-2'>

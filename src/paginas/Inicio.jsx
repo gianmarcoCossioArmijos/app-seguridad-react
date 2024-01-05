@@ -40,13 +40,13 @@ const Inicio = () => {
                 alt="imagen_alerta"
                 className='w-3/4 mx-auto rounded-lg'/>
 
-            <Link
-                to="/registrar"
-                className='w-3/4 mx-auto'>
+            <a
+                href="https://drive.google.com/file/d/1WAL5J1EfgozTARbfpjzLA6K-s_V5BAXr/view?usp=sharing"
+                className='w-3/4 mx-auto' target='_blank'>
                 <button className='w-full p-3 text-lg font-bold rounded-lg border-2 border-cyan-950 bg-yellow-500 hover:bg-yellow-400'>
                   Descargar
                 </button>
-            </Link>
+            </a>
           </div>
 
         </section>

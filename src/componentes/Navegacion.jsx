@@ -10,7 +10,7 @@ const Navegacion = () => {
 
   const dispatch = useDispatch();
   const menu = useSelector((state) => state.menu);
-  const isauth = useSelector((state) => state.isauth);
+  const isauth = useSelector((state) => state.isauth || "");
 
   useEffect(() => {
 
@@ -40,7 +40,7 @@ const Navegacion = () => {
 
       <div className='h-full my-auto p-2 flex gap-3'>
 
-        {isauth !== "" ? <LogoutNavegacion /> : <LoginNavegacion />}
+        { isauth !== "" ? <LogoutNavegacion /> : <LoginNavegacion /> }
 
         <img
             onClick={handleClick}

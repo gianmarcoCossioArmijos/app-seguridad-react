@@ -19,7 +19,7 @@ const Privada = () => {
 
     const auth = localStorage.getItem('token') || "";
 
-    if (auth === "") {
+    if (auth === "" || auth === null || auth === undefined) {
       navigate("/iniciar-sesion");
     }
   }, [auth])

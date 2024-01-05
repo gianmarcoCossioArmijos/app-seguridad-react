@@ -63,6 +63,7 @@ const InicioSesion = () => {
         } catch (error) {
 
             console.error(error.message);
+            toast.error("Usuario no encontrado")
         }
     }
 

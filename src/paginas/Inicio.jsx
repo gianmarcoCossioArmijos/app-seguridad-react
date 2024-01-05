@@ -1,57 +1,13 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 
-import { RiAlarmWarningFill } from "react-icons/ri";
-import enviarAlerta from '../utils/alerta.js'
-import { toast } from 'sonner';
-
 const Inicio = () => {
-  const [ubicacion, setUbicacion] = useState({
-    latitud: "",
-    longitud: ""
-})
-
-  const handleClick = async() => {
-
-    let respuesta;
-
-    if ("position" in navigator.geolocation) {
-
-      navigator.geolocation.getCurrentPosition((position) => {
-
-        const latitud = position.coords.latitude;
-        const longitud = position.coords.longitude;
-        setUbicacion({
-          latitud: latitud,
-          longitud: longitud
-        })
-      });
-
-      try {
-
-        respuesta = await enviarAlerta(ubicacion);
-      } catch (error) {
-        console.error("Error en la solicitud:", error.message);
-      }
-
-      if (respuesta) {
-        
-        toast.success("La alerta fue enviada a las autoridades")
-        setUbicacion({
-          latitud: "",
-          longitud: ""
-        })
-      }
-    } else {
-      toast.error("Su navegador no soporta geolocalizacion")
-    }
-  }
 
   return (
     <main className='min-h-screen text-cyan-950 overflow-hidden'>
         
-        <section className='w-full flex flex-col'>
-          <div className='w-full h-[380px] fondo-inicio'/>
+        <section className='w-full md:w-3/5 md:mx-auto flex flex-col'>
+          <div className='w-full h-[380px] md:rounded-lg fondo-inicio'/>
 
           <div className='w-full py-12 flex flex-col gap-10'>
             <h3 className='w-3/4 mx-auto text-4xl text-center font-bold'>
@@ -68,25 +24,34 @@ const Inicio = () => {
           </div>
         </section>
 
-        <section className='w-full py-12 flex flex-col gap-10'>
+        <section className='w-full md:w-3/5 md:mx-auto py-12 flex flex-col gap-10'>
           <img
               src="https://radiomaranon.org.pe/wp-content/uploads/2022/05/ntro-de-operaciones-mpj.jpg"
               alt="imagen_alerta"
               className='w-3/4 mx-auto rounded-lg'/>
 
           <h3 className='w-3/4 mx-auto text-4xl text-center font-bold'>
-            Si tu o alguien, se encuentran en una <span className='px-1 bg-yellow-500'>situacion de peligro</span>, envianos una <span className='px-1 bg-yellow-500'>alerta de emergencia</span>
+            Si tu o alguien, se encuentran en una <span className='px-1 bg-yellow-500'>situacion de peligro</span>, envianos una <span className='px-1 bg-yellow-500'>alerta de emergencia</span> desde nuestra app movil
           </h3>
 
-          <button
-              onClick={handleClick}
-              className='w-3/4 p-3 mx-auto flex flex-col text-lg text-white font-bold rounded-full border-2 border-cyan-950 bg-red-600 hover:bg-red-500'>
-            <RiAlarmWarningFill className='mx-auto'/>
-            <span className='mx-auto'>Alerta de Emergencia</span>
-          </button>
+          <div className='w-full flex flex-col gap-2'>
+            <img
+                src="https://i.postimg.cc/G2DF74PC/ALERTA-cel-1.png"
+                alt="imagen_alerta"
+                className='w-3/4 mx-auto rounded-lg'/>
+
+            <Link
+                to="/registrar"
+                className='w-3/4 mx-auto'>
+                <button className='w-full p-3 text-lg font-bold rounded-lg border-2 border-cyan-950 bg-yellow-500 hover:bg-yellow-400'>
+                  Descargar
+                </button>
+            </Link>
+          </div>
+
         </section>
 
-        <section className='w-full py-12 flex flex-col gap-10'>
+        <section className='w-full md:w-3/5 md:mx-auto py-12 flex flex-col gap-10'>
           <ul className='w-3/4 mx-auto text-xl font-bold'>
             <li>• Envia tu alerta de emergencia</li>
             <li>• Tu ubicacion se compartira con nosotros</li>

@@ -47,7 +47,7 @@ const Registro = () => {
   return (
     <main className='w-full px-4 py-20 min-h-screen text-cyan-950'>
 
-        <section className='w-full p-4 bg-white rounded-lg'>
+        <section className='w-full md:w-3/5 md:mx-auto p-4 bg-white rounded-lg'>
             <h3 className='pb-8 text-4xl text-center font-bold'>Registrarme</h3>
 
             <form

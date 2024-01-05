@@ -4,19 +4,17 @@ import { Link } from 'react-router-dom';
 import { FaUsersCog } from "react-icons/fa";
 import { LuNetwork } from "react-icons/lu";
 import { MdCrisisAlert } from "react-icons/md";
-import { TbReportSearch } from "react-icons/tb";
 import { FaCarSide } from "react-icons/fa";
 import { GiTeamDowngrade } from "react-icons/gi";
 import { TbMapCog } from "react-icons/tb";
 import { RiNewspaperLine } from "react-icons/ri";
 import { MdOutlineDisabledByDefault } from "react-icons/md";
 import { RiAlarmWarningFill } from "react-icons/ri";
-import { MdOutlineLocalPolice } from "react-icons/md";
 
 import Mapa from '../componentes/administracion-componentes/Mapa'
 import axios from 'axios';
 import { toast } from 'sonner';
-import moment from 'moment';
+import {FECHA_HOY} from '../constantes/fecha.js'
 
 const MenuAdministracion = () => {
   const [ alertas, setAlertas] = useState([]);
@@ -27,9 +25,7 @@ const MenuAdministracion = () => {
     listarAlertas()
       .then( data => setAlertas(data));
 
-    const date = new Date();
-    const fecha = moment(date).format('YYYY-MM-DD');
-    listarDenuncias(fecha)
+    listarDenuncias(FECHA_HOY)
       .then(data  => setDenuncias(data))
   }, [])
 
@@ -117,9 +113,8 @@ const MenuAdministracion = () => {
     }
     if (respuesta) {
 
-      toast.success("Se desabilito la denuncia exitosamente")
-      const fecha = new Date().toISOString().slice(0, 10);
-      listarDenuncias(fecha)
+      toast.success("Se ha marcado denuncia como atentida exitosamente")
+      listarDenuncias(FECHA_HOY)
         .then(data  => setDenuncias(data))
     }
   }
@@ -133,15 +128,25 @@ const MenuAdministracion = () => {
           <FaUsersCog className='w-[50px] h-[50px] p-2 bg-yellow-400 hover:bg-yellow-500 rounded-lg'/>
         </Link>
 
-        <LuNetwork className='w-[50px] h-[50px] p-2 bg-yellow-400 hover:bg-yellow-500 rounded-lg'/>
-        <MdCrisisAlert className='w-[50px] h-[50px] p-2 bg-yellow-400 hover:bg-yellow-500 rounded-lg'/>
-        <TbReportSearch className='w-[50px] h-[50px] p-2 bg-yellow-400 hover:bg-yellow-500 rounded-lg'/>
+        <Link to="/roles-administracion">
+          <LuNetwork className='w-[50px] h-[50px] p-2 bg-yellow-400 hover:bg-yellow-500 rounded-lg'/>
+        </Link>
+
+        <Link to="/alertas-administracion">
+          <MdCrisisAlert className='w-[50px] h-[50px] p-2 bg-yellow-400 hover:bg-yellow-500 rounded-lg'/>
+        </Link>
+
+        <Link to="/denuncias-administracion">
+          <RiAlarmWarningFill className='w-[50px] h-[50px] p-2 bg-yellow-400 hover:bg-yellow-500 rounded-lg'/>
+        </Link>
 
         <Link to="/vehiculos-administracion">
           <FaCarSide className='w-[50px] h-[50px] p-2 bg-yellow-400 hover:bg-yellow-500 rounded-lg'/>
         </Link>
 
-        <GiTeamDowngrade className='w-[50px] h-[50px] p-2 bg-yellow-400 hover:bg-yellow-500 rounded-lg'/>
+        <Link to="/unidades-administracion">
+          <GiTeamDowngrade className='w-[50px] h-[50px] p-2 bg-yellow-400 hover:bg-yellow-500 rounded-lg'/>
+        </Link>
 
         <Link to="/zonas-administracion">
           <TbMapCog className='w-[50px] h-[50px] p-2 bg-yellow-400 hover:bg-yellow-500 rounded-lg'/>
@@ -157,7 +162,7 @@ const MenuAdministracion = () => {
 
       <h4 className='flex items-center gap-4 p-2 text-lg font-bold bg-white rounded-lg'>
         Alertas de Emergencia Pendientes
-        <RiAlarmWarningFill />
+        <MdCrisisAlert />
       </h4>
 
       <table className='w-full table-auto bg-white'>
@@ -199,7 +204,7 @@ const MenuAdministracion = () => {
 
       <h4 className='flex items-center gap-4 p-2 text-lg font-bold bg-white rounded-lg'>
         Denuncias de Hoy
-        <MdOutlineLocalPolice />
+        <RiAlarmWarningFill />
       </h4>
 
       <table className='w-full table-auto bg-white'>
@@ -207,8 +212,6 @@ const MenuAdministracion = () => {
           <tr>
             <th className='border border-cyan-950'>ID</th>
             <th className='border border-cyan-950'>Fecha</th>
-            <th className='border border-cyan-950'>Hora</th>
-            <th className='border border-cyan-950'>Telefono</th>
             <th className='border border-cyan-950'>Tipo</th>
             <th className='border border-cyan-950'>Descripcion</th>
             <th className='border border-cyan-950'>Ubicacion</th>
@@ -225,8 +228,6 @@ const MenuAdministracion = () => {
                 key={denuncia.id}
                 className='border border-cyan-950'>
                 <th className='border border-cyan-950'>{denuncia.id}</th>
-                <th className='border border-cyan-950'>{denuncia.fecha}</th>
-                <th className='border border-cyan-950'>{denuncia.hora}</th>
                 <th className='border border-cyan-950'>{denuncia.telefono}</th>
                 <th className='border border-cyan-950'>{denuncia.tipo}</th>
                 <th className='border border-cyan-950'>{denuncia.descripcion}</th>

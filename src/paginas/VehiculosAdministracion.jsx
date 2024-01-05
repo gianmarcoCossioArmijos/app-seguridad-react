@@ -57,7 +57,7 @@ const VehiculosAdministracion = () => {
 
         if(formulario.id === "") {
 
-            const url = "https://alerta-jaen-backend.onrender.com/zonas";
+            const url = "https://alerta-jaen-backend.onrender.com/vehiculos";
             try {
 
                 const data = JSON.parse(localStorage.getItem("token"));
@@ -74,7 +74,7 @@ const VehiculosAdministracion = () => {
                         Authorization: token
                     }
                 })
-                toast.success("Se ha registrado un vehiculo con exito");
+                toast.success("Se ha registrado un vehiculo exitosamente");
                 listarVehiculos()
                     .then(data => setVehiculos(data));
             } catch (error) {
@@ -92,7 +92,7 @@ const VehiculosAdministracion = () => {
                         Authorization: token
                     }
                 })
-                toast.success("Se ha actualizado vehiculo con exito");
+                toast.success("Se ha actualizado vehiculo exitosamente");
                 listarVehiculos()
                     .then(data => setVehiculos(data));
             } catch (error) {
@@ -110,9 +110,24 @@ const VehiculosAdministracion = () => {
         })
     }
 
-    const handleDelete = (id) => {
+    const handleDelete = async(id) => {
 
+        const url = `https://alerta-jaen-backend.onrender.com/vehiculos/${id}`;
+            try {
 
+                const data = JSON.parse(localStorage.getItem("token"));
+                const token = `Bearer ${data.access_token}`;
+                await axios.delete(url, {
+                    headers: {
+                        Authorization: token
+                    }
+                })
+                toast.success("Se ha desabilitado vehiculo exitosamente");
+                listarVehiculos()
+                    .then(data => setVehiculos(data));
+            } catch (error) {
+            console.error("Error en la solicitud:", error.message);
+            }
     }
     
   return (
@@ -127,7 +142,7 @@ const VehiculosAdministracion = () => {
 
             <form
                 onSubmit={handleSubmit}
-                className='flex flex-col gap-4'>
+                className='md:w-3/5 md:mx-auto flex flex-col gap-4'>
 
                 <input
                     type="hidden"
@@ -198,8 +213,6 @@ const VehiculosAdministracion = () => {
                     className='w-full mt-6 mb-6 p-3 text-lg font-bold rounded-lg border-2 border-cyan-950 bg-yellow-500 hover:bg-yellow-400'/>
             </form>
         </section>
-
-        {JSON.stringify(formulario)}
 
         <h4 className='p-4 flex items-center gap-4 text-lg font-bold bg-white rounded-lg'>
             Lista de Vehiculos

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 
 import { login } from '../store/isAuth.js'
 import axios from 'axios'
@@ -25,43 +25,51 @@ const InicioSesion = () => {
     const handleSubmit = async (event) => {
 
         event.preventDefault();
-        const url = "https://alerta-jaen-backend.onrender.com/auth/login";
+        const urlLogin = "https://alerta-jaen-backend.onrender.com/auth/login";
+        const urlUsuario = "https://alerta-jaen-backend.onrender.com/usuarios/";
         let respuesta = "";
+        let auth = "";
         
         try {
-            respuesta = await axios.post(url, formulario);
+
+            respuesta = await axios.post(urlLogin, formulario);
+
             if (respuesta) {
-        
-                toast.success("Bienvenido")
-                setFormulario({
-                    email: "",
-                    clave: ""
+            
+                const token = `Bearer ${respuesta.data.access_token}`;
+                auth = await axios.get(urlUsuario + formulario.email,{
+                    headers: {
+                        Authorization: token
+                    }
                 })
-                dispatch(login(respuesta.data))
+                
+                if (auth.data.rol_id === 1) {
+    
+                    toast.success("Bienvenido")
+                    localStorage.setItem("token", JSON.stringify(respuesta.data));
+                    dispatch(login());
+
+                    setFormulario({
+                        email: "",
+                        clave: ""
+                    })
+                    naviagte("/noticias")
+                } else {
+                    toast.error("Usuario no autorizado")
+                }
+            } else {
+                toast.error("Usuario no encontrado")
             }
         } catch (error) {
-            
-            console.error(error.message);
-        }
 
-        if (respuesta) {
-        
-            localStorage.setItem("token",JSON.stringify(respuesta.data));
-            toast.success("Bienvenido")
-            setFormulario({
-                email: "",
-                clave: ""
-            })
-            naviagte("/noticias")
-        } else {
-            toast.error("Usuario no encontrado")
+            console.error(error.message);
         }
     }
 
   return (
     <main className='w-full px-4 py-20 min-h-screen text-cyan-950'>
 
-        <section className='w-full p-4 bg-white rounded-lg'>
+        <section className='w-full md:w-3/5 md:mx-auto p-4 bg-white rounded-lg'>
             <h3 className='pb-8 text-4xl text-center font-bold'>Iniciar Sesion</h3>
 
             <form
@@ -100,7 +108,7 @@ const InicioSesion = () => {
                     ¿Haz olvidado tu contraseña? <strong>Recupera tu contraseña</strong>
                 </Link>
 
-                <Link to="/registro">
+                <Link to="/registrar">
                     ¿Aun no estas registrado? <strong>Registrate aqui</strong>
                 </Link>
             </div>

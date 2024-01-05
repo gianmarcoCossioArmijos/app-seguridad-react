@@ -71,7 +71,7 @@ const NoticiasAdministracion = () => {
                         Authorization: token
                     }
                 })
-                toast.success("Se ha registrado una noticia con exito");
+                toast.success("Se ha registrado una noticia exitosamente");
                 listarNoticias()
                     .then(data => setNoticias(data));
             } catch (error) {
@@ -89,7 +89,7 @@ const NoticiasAdministracion = () => {
                         Authorization: token
                     }
                 })
-                toast.success("Se ha actualizado noticia con exito");
+                toast.success("Se ha actualizado noticia exitosamente");
                 listarNoticias()
                     .then(data => setNoticias(data));
             } catch (error) {
@@ -118,7 +118,7 @@ const NoticiasAdministracion = () => {
 
             <form
                 onSubmit={handleSubmit}
-                className='flex flex-col gap-4'>
+                className='md:w-3/5 md:mx-auto flex flex-col gap-4'>
 
                 <input
                     type="hidden"

@@ -11,7 +11,6 @@ import { FaUserEdit } from "react-icons/fa";
 const UsuariosAdministracion = () => {
     const [usuarios, setUsuarios] = useState([]);
     const [roles, setRoles] = useState([]);
-    const [tipoUsuario, setTipoUsuario] = useState({});
     const [formulario, setFormulario] = useState({
         id :"",
         nombres :"",
@@ -36,8 +35,7 @@ const UsuariosAdministracion = () => {
     const listarUsuarios = async() => {
 
         const url = "https://alerta-jaen-backend.onrender.com/usuarios";
-        let respuesta;
-
+        let respuesta = [];
         try {
 
             const data = JSON.parse(localStorage.getItem("token"));
@@ -151,8 +149,23 @@ const UsuariosAdministracion = () => {
 
       const handleDelete = async(id) => {
 
+        const url = `https://alerta-jaen-backend.onrender.com/usuarios/${id}`;
+            try {
 
-      }
+                const data = JSON.parse(localStorage.getItem("token"));
+                const token = `Bearer ${data.access_token}`;
+                await axios.delete(url, {
+                    headers: {
+                        Authorization: token
+                    }
+                })
+                toast.success("Se ha desabilitado usuario exitosamente");
+                listarUsuarios()
+                    .then(data => setUsuarios(data));
+            } catch (error) {
+            console.error("Error en la solicitud:", error.message);
+            }
+    }
     
   return (
     <main className='w-full px-4 py-10 min-h-screen flex flex-col gap-4 text-cyan-950'>
@@ -166,12 +179,12 @@ const UsuariosAdministracion = () => {
 
             <form
                 onSubmit={handleSubmit}
-                className='flex flex-col gap-4'>
+                className='md:w-3/5 md:mx-auto flex flex-col gap-4'>
 
                 <input
                     type="hidden"
                     name='id'
-                    value={formulario.id}
+                    value={formulario?.id}
                     onChange={handleChange}
                     className='p-3 rounded-lg bg-blue-50'
                     />
@@ -181,7 +194,7 @@ const UsuariosAdministracion = () => {
                     <input
                         type="text"
                         name='nombres'
-                        value={formulario.nombres}
+                        value={formulario?.nombres}
                         onChange={handleChange}
                         className='p-3 rounded-lg bg-blue-50'
                         required/>
@@ -192,10 +205,10 @@ const UsuariosAdministracion = () => {
                     <input
                         type="date"
                         name='nacimiento'
-                        value={formulario.nacimiento}
+                        value={formulario?.nacimiento}
                         onChange={handleChange}
                         className='p-3 rounded-lg bg-blue-50'
-                        required/>
+                        />
                 </label>
 
                 <label className='flex flex-col gap-2'>
@@ -203,7 +216,7 @@ const UsuariosAdministracion = () => {
                     <input
                         type="email"
                         name='email'
-                        value={formulario.email}
+                        value={formulario?.email}
                         onChange={handleChange}
                         className='p-3 rounded-lg bg-blue-50'
                         required/>
@@ -214,7 +227,7 @@ const UsuariosAdministracion = () => {
                     <input
                         type="tel"
                         name='telefono'
-                        value={formulario.telefono}
+                        value={formulario?.telefono}
                         onChange={handleChange}
                         className='p-3 rounded-lg bg-blue-50'
                         required/>
@@ -225,7 +238,7 @@ const UsuariosAdministracion = () => {
                     <input
                         type="text"
                         name='direccion'
-                        value={formulario.direccion}
+                        value={formulario?.direccion}
                         onChange={handleChange}
                         className='p-3 rounded-lg bg-blue-50'
                         required/>
@@ -238,7 +251,7 @@ const UsuariosAdministracion = () => {
                     <select
                         name="rol_id"
                         className='w-full p-3 rounded-lg bg-blue-50'
-                        value={formulario.rol_id}
+                        value={formulario?.rol_id}
                         onChange={handleChange}>
 
                         <option value="">
@@ -264,7 +277,7 @@ const UsuariosAdministracion = () => {
                     <input
                         type="password"
                         name='clave'
-                        value={formulario.clave}
+                        value={formulario?.clave}
                         onChange={handleChange}
                         className='p-3 rounded-lg bg-blue-50'
                         />
@@ -287,11 +300,9 @@ const UsuariosAdministracion = () => {
             <tr>
                 <th className='border border-cyan-950'>ID</th>
                 <th className='border border-cyan-950'>Nombres</th>
-                <th className='border border-cyan-950'>Nacimiento</th>
                 <th className='border border-cyan-950'>Email</th>
                 <th className='border border-cyan-950'>Telefono</th>
                 <th className='border border-cyan-950'>Direccion</th>
-                <th className='border border-cyan-950'>Estado</th>
                 <th className='border border-cyan-950'>Opciones</th>
             </tr>
             </thead>
@@ -305,17 +316,14 @@ const UsuariosAdministracion = () => {
                     className='border border-cyan-950'>
                     <th className='border border-cyan-950'>{usuario.id}</th>
                     <th className='border border-cyan-950'>{usuario.nombres}</th>
-                    <th className='border border-cyan-950'>{usuario.nacimiento}</th>
                     <th className='border border-cyan-950'>{usuario.email}</th>
                     <th className='border border-cyan-950'>{usuario.telefono}</th>
                     <th className='border border-cyan-950'>{usuario.direccion}</th>
-                    <th className='border border-cyan-950'>{usuario.estado === true ? "habilitado" : "desabilitado"}</th>
                     <th className='flex p-1 justify-center gap-1'>
                         <FaUserEdit
                             onClick={() => setFormulario({
                                 id: usuario.id,
                                 nombres :usuario.nombres,
-                                nacimiento: usuario.nacimiento,
                                 email: usuario.email,
                                 telefono: usuario.telefono,
                                 direccion: usuario.direccion,

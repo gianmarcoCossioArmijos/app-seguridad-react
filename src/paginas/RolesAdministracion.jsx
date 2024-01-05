@@ -1,15 +1,14 @@
 import React, { useState } from 'react'
 
-import { TbMapCog } from "react-icons/tb";
+import { LuNetwork } from "react-icons/lu";
 import { BiEdit } from "react-icons/bi";
-import { MdOutlineDisabledByDefault } from "react-icons/md";
 
 import axios from 'axios'
 import { toast } from 'sonner'
 import { useEffect } from 'react';
 
-const ZonasAdministracion = () => {
-    const [zonas, setZonas] = useState([]);
+const RolesAdministracion = () => {
+    const [roles, setRoles] = useState([]);
     const [formulario, setFormulario] = useState({
         id: "",
         nombre:""
@@ -17,21 +16,22 @@ const ZonasAdministracion = () => {
 
     useEffect(() => {
 
-        listarZonas()
-            .then(data => setZonas(data));
+        listarRoles()
+            .then(data => setRoles(data));
     }, [])
 
-    const listarZonas = async() => {
+    const listarRoles = async() => {
 
-        const url = "https://alerta-jaen-backend.onrender.com/zonas";
+        const url = "https://alerta-jaen-backend.onrender.com/roles";
         let respuesta;
+
         try {
-    
+
             const data = JSON.parse(localStorage.getItem("token"));
             const token = `Bearer ${data.access_token}`;
-            respuesta = await axios.get(url, {
+            respuesta = await axios.get(url,{
                 headers: {
-                  Authorization: token
+                    Authorization: token
                 }
             })
         } catch (error) {
@@ -53,28 +53,28 @@ const ZonasAdministracion = () => {
 
         if(formulario.id === "") {
 
-            const url = "https://alerta-jaen-backend.onrender.com/zonas";
+            const url = "https://alerta-jaen-backend.onrender.com/roles";
             try {
 
                 const data = JSON.parse(localStorage.getItem("token"));
                 const token = `Bearer ${data.access_token}`;
-                const zona = {
+                const rol = {
                     nombre: formulario.nombre,
                 }
-                await axios.post(url, zona, {
+                await axios.post(url, rol, {
                     headers: {
                         Authorization: token
                     }
                 })
-                toast.success("Se ha registrado una zona exitosamente");
-                listarZonas()
-                    .then(data => setZonas(data));
+                toast.success("Se ha registrado un rol exitosamente");
+                listarRoles()
+                    .then(data => setRoles(data));
             } catch (error) {
             console.error("Error en la solicitud:", error.message);
             }
         } else {
 
-            const url = `https://alerta-jaen-backend.onrender.com/zonas/${formulario.id}`;
+            const url = `https://alerta-jaen-backend.onrender.com/roles/${formulario.id}`;
             try {
 
                 const data = JSON.parse(localStorage.getItem("token"));
@@ -84,9 +84,9 @@ const ZonasAdministracion = () => {
                         Authorization: token
                     }
                 })
-                toast.success("Se ha actualizado zona exitosamente");
-                listarZonas()
-                    .then(data => setZonas(data));
+                toast.success("Se ha actualizado rol exitosamente");
+                listarRoles()
+                    .then(data => setRoles(data));
             } catch (error) {
             console.error("Error en la solicitud:", error.message);
             }
@@ -97,33 +97,13 @@ const ZonasAdministracion = () => {
             nombre:""
         })
       }
-
-      const handleDelete = async(id) => {
-
-        const url = `https://alerta-jaen-backend.onrender.com/zonas/${id}`;
-            try {
-
-                const data = JSON.parse(localStorage.getItem("token"));
-                const token = `Bearer ${data.access_token}`;
-                await axios.delete(url, {
-                    headers: {
-                        Authorization: token
-                    }
-                })
-                toast.success("Se ha desabilitado zona exitosamente");
-                listarZonas()
-                    .then(data => setZonas(data));
-            } catch (error) {
-            console.error("Error en la solicitud:", error.message);
-            }
-    }
     
   return (
     <main className='w-full px-4 py-10 min-h-screen flex flex-col gap-4 text-cyan-950'>
 
         <h4 className='p-4 flex items-center gap-4 text-lg font-bold bg-white rounded-lg'>
-            Registrar Zona
-            <TbMapCog />
+            Registrar Rol
+            <LuNetwork />
         </h4>
 
         <section className='w-full p-4 bg-white rounded-lg'>
@@ -159,8 +139,8 @@ const ZonasAdministracion = () => {
         </section>
 
         <h4 className='p-4 flex items-center gap-4 text-lg font-bold bg-white rounded-lg'>
-            Lista de Zonas
-            <TbMapCog />
+            Lista de Roles
+            <LuNetwork />
         </h4>
 
         <table className='w-full table-auto bg-white'>
@@ -174,24 +154,20 @@ const ZonasAdministracion = () => {
 
             <tbody className='text-xs'>
 
-            {zonas?.map(zona => {
+            {roles?.map(rol => {
                 return (
                 <tr
-                    key={zona.id}
+                    key={rol.id}
                     className='border border-cyan-950'>
-                    <th className='border border-cyan-950'>{zona.id}</th>
-                    <th className='border border-cyan-950'>{zona.nombre}</th>
+                    <th className='border border-cyan-950'>{rol.id}</th>
+                    <th className='border border-cyan-950'>{rol.nombre}</th>
                     <th className='flex p-1 justify-center gap-1'>
                         <BiEdit
                             onClick={() => setFormulario({
-                                id: zona.id,
-                                nombre: zona.nombre,
+                                id: rol.id,
+                                nombre: rol.nombre,
                             })}
                             className='w-[30px] h-[30px] p-1 bg-yellow-500 hover:bg-yellow-400 rounded-lg text-white'/>
-
-                        <MdOutlineDisabledByDefault
-                            onClick={() => handleDelete(zona.id)}
-                            className='w-[30px] h-[30px] py-1 bg-red-600 hover:bg-red-500 rounded-lg text-white'/>
                     </th>
                 </tr>
                 )
@@ -203,4 +179,4 @@ const ZonasAdministracion = () => {
   )
 }
 
-export default ZonasAdministracion
+export default RolesAdministracion

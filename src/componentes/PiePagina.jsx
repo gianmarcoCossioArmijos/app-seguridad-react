@@ -11,8 +11,8 @@ const PiePagina = () => {
         <div className='flex flex-col gap-2 text-cyan-950 text-sm'>
             <h5 className='font-bold'>Contacto</h5>
             <ul>
-                <li>ejemplo@contacto.com</li>
-                <li>909090909</li>
+                <li>alertajaen@gmail.com</li>
+                <li>990192384</li>
             </ul>
             <div className='w-1/2 flex gap-4 text-cyan-950 text-md'>
                 <AiFillFacebook />
@@ -23,7 +23,7 @@ const PiePagina = () => {
 
         <div className='flex flex-col gap-2 text-cyan-950 text-sm'>
             <h5 className='font-bold'>Direccion</h5>
-            <h6>Av. Ejemplo 123, Jaen - Cajamarca</h6>
+            <h6>Av. Pakamuros 4501 Jaen - Cajamarca</h6>
         </div>
 
     </footer>
